@@ -92,17 +92,33 @@ def evaluate_password(username, email, birthdate, password):
 
 
 def calculate_crack_time(complexity):
-    seconds = complexity / 1000000000
-    if seconds < 1:
-        return "less than a second"
-    elif seconds < 60:
-        return "less than a minute"
-    elif seconds < 3600:
-        minutes = int(seconds / 60)
-        return f"{minutes} minute{'s' if minutes > 1 else ''}"
-    else:
-        hours = int(seconds / 3600)
-        return f"{hours} hour{'s' if hours > 1 else ''}"
+    # Estimate time to crack the password based on complexity
+    seconds_per_attempt = 1e-10  # Assuming 10 billion offline hash attempts per second
+    crack_time_seconds = complexity * seconds_per_attempt
+
+    crack_time_years = crack_time_seconds / (60 * 60 * 24 * 365)
+    crack_time_months = crack_time_seconds / (60 * 60 * 24 * 30)
+    crack_time_weeks = crack_time_seconds / (60 * 60 * 24 * 7)
+    crack_time_days = crack_time_seconds / (60 * 60 * 24)
+
+    years = int(crack_time_years)
+    months = int(crack_time_months % 12)
+    weeks = int(crack_time_weeks % 4)
+    days = int(crack_time_days % 7)
+    if crack_time_seconds < 1:
+        return "few seconds"  # Return a default value for short weak passwords
+
+    crack_time_str = ''
+    if years > 0:
+        crack_time_str += f'{years} year(s) '
+    if months > 0:
+        crack_time_str += f'{months} month(s) '
+    if weeks > 0:
+        crack_time_str += f'{weeks} week(s) '
+    if days > 0:
+        crack_time_str += f'{days} day(s)'
+
+    return crack_time_str.strip()
 
 
 # Create the main window

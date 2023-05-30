@@ -1,2 +1,3 @@
 app.py : the python code with flask
 test.py : the backup version
+passwords.sql : the list of commonly used passwords 

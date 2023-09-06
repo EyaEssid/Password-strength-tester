@@ -1,3 +1,5 @@
+This is a project done at the end of the semster in a security class. Our aim is to create a Password strength tester that overcame the limitations of the classical ones.
+
 app.py : the python code with flask
 test.py : the backup version
 passwords.sql : the list of commonly used passwords 
